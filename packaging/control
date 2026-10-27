@@ -1,0 +1,23 @@
+Package: umwand
+Version: 0.1.1
+Architecture: amd64
+Maintainer: David M. Anderson <david.anderson@excelano.com>
+Depends: libglib2.0-bin, xdg-utils
+Recommends: libreoffice-writer, libreoffice-calc, libreoffice-impress
+Suggests: this2that
+Section: utils
+Priority: optional
+Homepage: https://github.com/excelano/umwand
+Description: Open Office Open XML files as OpenDocument
+ umwand registers as the handler for .docx, .xlsx and .pptx files. Opening
+ one converts it to .odt, .ods or .odp and opens the result in the default
+ application for OpenDocument. The converted file sits beside the original,
+ which is never changed; a file opened from a temporary or read-only
+ location is converted into an umwand folder under Documents instead.
+ Opening the same file again reuses a conversion that is newer than it.
+ .
+ LibreOffice does the conversion when it is installed. Without it, the
+ this2that converters handle Word and Excel files, and presentations open
+ unconverted. Digitally signed files, which conversion would invalidate,
+ and files no converter manages are passed to the next application
+ registered for their type.

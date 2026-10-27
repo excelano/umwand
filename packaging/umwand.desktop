@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=umwand
+GenericName=OpenDocument Converter
+Comment=Convert Word, Excel and PowerPoint files to OpenDocument and open them
+Exec=umwand %F
+Icon=umwand
+Terminal=false
+NoDisplay=true
+Categories=Office;
+MimeType=application/vnd.openxmlformats-officedocument.wordprocessingml.document;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;application/vnd.openxmlformats-officedocument.presentationml.presentation;

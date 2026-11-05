@@ -17,6 +17,8 @@ import (
 
 const progressDelay = time.Second
 
+const unmatchedAppName = "Umwand"
+
 func openFile(path string) error {
 	return gio("open", path)
 }
@@ -29,14 +31,26 @@ func passThrough(src string, f format) error {
 	return gio("launch", app, src)
 }
 
+// The launched application inherits gio's output, so a pipe would keep umwand
+// waiting until that application exits; a file does not.
 func gio(args ...string) error {
-	out, err := exec.Command("gio", args...).CombinedOutput()
+	out, err := os.CreateTemp("", "umwand-gio-")
 	if err != nil {
-		if msg := lastLine(string(out)); msg != "" {
+		return err
+	}
+	defer os.Remove(out.Name())
+	defer out.Close()
+
+	cmd := exec.Command("gio", args...)
+	cmd.Stdout = out
+	cmd.Stderr = out
+	if err := cmd.Run(); err != nil {
+		if msg := lastLine(readFile(out.Name())); msg != "" {
 			return fmt.Errorf("%s", msg)
 		}
+		return err
 	}
-	return err
+	return nil
 }
 
 func otherHandler(mimeType string) string {
@@ -106,7 +120,7 @@ func notify(summary, body string) uint32 {
 		"--dest", "org.freedesktop.Notifications",
 		"--object-path", "/org/freedesktop/Notifications",
 		"--method", "org.freedesktop.Notifications.Notify", "--",
-		"umwand", "0", "umwand", gvariantString(summary), gvariantString(body),
+		unmatchedAppName, "0", "umwand", gvariantString(summary), gvariantString(body),
 		"[]", "{}", "-1").Output()
 	if err != nil {
 		return 0

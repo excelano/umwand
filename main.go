@@ -80,7 +80,7 @@ func handle(arg string) error {
 	}
 	chain := converters(f)
 	if len(chain) == 0 {
-		return passThrough(src, f)
+		return fallBack(src, f, missingConverter(f))
 	}
 
 	dir, err := outputDir(src)
@@ -110,4 +110,11 @@ func fallBack(src string, f format, cause error) error {
 	}
 	notify("umwand opened "+filepath.Base(src)+" unconverted", cause.Error())
 	return nil
+}
+
+func missingConverter(f format) error {
+	if f.this2that == "" {
+		return errors.New("no converter found; install LibreOffice")
+	}
+	return errors.New("no converter found; install LibreOffice or this2that")
 }

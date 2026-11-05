@@ -48,8 +48,9 @@ LibreOffice gives the more faithful result.
 
 Success is judged by the file a converter wrote, not by its exit status: the
 output has to be an OpenDocument package of the expected type. When a converter
-fails, the next one is tried, and when none succeeds the original opens in the
-next application registered for its type, with a notification saying why.
+fails, the next one is tried, and when none succeeds or none is installed the
+original opens in the next application registered for its type, with a
+notification saying why.
 Digitally signed files go straight to that application too, since conversion
 would invalidate the signature.
 

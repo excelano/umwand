@@ -1,5 +1,5 @@
 Package: umwand
-Version: 0.1.1
+Version: 0.1.2
 Architecture: amd64
 Maintainer: David M. Anderson <david.anderson@excelano.com>
 Depends: libglib2.0-bin, xdg-utils

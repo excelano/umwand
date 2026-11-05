@@ -105,7 +105,7 @@ func notify(summary, body string) uint32 {
 	out, err := exec.Command("gdbus", "call", "--session",
 		"--dest", "org.freedesktop.Notifications",
 		"--object-path", "/org/freedesktop/Notifications",
-		"--method", "org.freedesktop.Notifications.Notify",
+		"--method", "org.freedesktop.Notifications.Notify", "--",
 		"umwand", "0", "umwand", gvariantString(summary), gvariantString(body),
 		"[]", "{}", "-1").Output()
 	if err != nil {
